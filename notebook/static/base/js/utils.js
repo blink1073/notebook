@@ -799,7 +799,7 @@ define([
         }
         return $el.map(function(){
             // MathJax takes a DOM node: $.map makes `this` the context
-            return MathJax.Hub.Queue(["Typeset", MathJax.Hub, this]);
+            return window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub, this]);
         });
     };
     
