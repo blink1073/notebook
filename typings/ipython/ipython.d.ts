@@ -3,6 +3,11 @@ declare module "base/js/namespace" {
     }
 }
 
+declare module "base/js/events" {
+    export var on:(...any:any[])=> any
+
+}
+
 
 declare module "base/js/dialog" {
     export var modal:any;
