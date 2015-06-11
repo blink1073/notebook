@@ -1,15 +1,14 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import $ = require('jquery')
-import events = require('base/js/events')
+import $ = require('jquery');
+import events = require('base/js/events');
 
 export class Page {
-    "use strict";
 
-    var Page = function ():void {
+    constructor(){
         this.bind_events();
-    };
+    }
 
     public bind_events():void {
         // resize site on:
@@ -23,7 +22,7 @@ export class Page {
         // On document ready, resize codemirror.
         $(document).ready(_handle_resize);
         events.on('resize-header.Page', _handle_resize);
-    };
+    }
 
     public show():void {
         /**
@@ -32,7 +31,7 @@ export class Page {
          */
         this.show_header();
         this.show_site();
-    };
+    }
 
     public show_header():void {
         /**
@@ -41,7 +40,7 @@ export class Page {
          * TODO: selector are hardcoded, pass as constructor argument
          */
         $('div#header').css('display','block');
-    };
+    }
 
     public show_site():void {
         /**
@@ -51,11 +50,12 @@ export class Page {
          */
         $('div#site').css('display', 'block');
         this._resize_site();
-    };
+    }
 
     private _resize_site():void {
         // Update the site's size.
         $('div#site').height($(window).height() - $('#header').height());
-    };
+    }
 
 }
+
