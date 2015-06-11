@@ -1,17 +1,17 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-define([
-    'jquery',
-    'base/js/events',
-], function($, events){
+import $ = require('jquery')
+import events = require('base/js/events')
+
+export class Page {
     "use strict";
 
-    var Page = function () {
+    var Page = function ():void {
         this.bind_events();
     };
 
-    Page.prototype.bind_events = function () {
+    public bind_events():void {
         // resize site on:
         // - window resize
         // - header change
@@ -25,7 +25,7 @@ define([
         events.on('resize-header.Page', _handle_resize);
     };
 
-    Page.prototype.show = function () {
+    public show():void {
         /**
          * The header and site divs start out hidden to prevent FLOUC.
          * Main scripts should call this method after styling everything.
@@ -34,7 +34,7 @@ define([
         this.show_site();
     };
 
-    Page.prototype.show_header = function () {
+    public show_header():void {
         /**
          * The header and site divs start out hidden to prevent FLOUC.
          * Main scripts should call this method after styling everything.
@@ -43,7 +43,7 @@ define([
         $('div#header').css('display','block');
     };
 
-    Page.prototype.show_site = function () {
+    public show_site():void {
         /**
          * The header and site divs start out hidden to prevent FLOUC.
          * Main scripts should call this method after styling everything.
@@ -53,10 +53,9 @@ define([
         this._resize_site();
     };
 
-    Page.prototype._resize_site = function() {
+    private _resize_site():void {
         // Update the site's size.
         $('div#site').height($(window).height() - $('#header').height());
     };
 
-    return {'Page': Page};
-});
+}
