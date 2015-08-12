@@ -1,11 +1,12 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
-    "use strict";
-        
+"use strict";
+
+// Contents must be loaded at runtime.
+requirejs(['contents'], function(contents_service) {
     var IPython = require('base/js/namespace');
     var $ = require('jquery');
     var notebook = require('notebook/js/notebook');
-    var contents = require('contents');
     var configmod = require('services/config');
     var utils = require('base/js/utils');
     var page = require('base/js/page');
@@ -138,3 +139,4 @@
     utils.load_extensions_from_config(config_section);
     utils.load_extensions_from_config(common_config);
     notebook.load_notebook(common_options.notebook_path);
+});
