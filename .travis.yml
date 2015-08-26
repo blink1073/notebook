@@ -22,6 +22,7 @@ before_install:
 install:
     - pip install -f travis-wheels/wheelhouse --pre file://$PWD#egg=notebook[test] coveralls
 script:
+    - ls notebook/static/components
     - 'if [[ $GROUP == js* ]]; then python -m notebook.jstest ${GROUP:3}; fi'
     - 'if [[ $GROUP == python ]]; then nosetests --with-coverage --cover-package=notebook notebook; fi'
 matrix:
