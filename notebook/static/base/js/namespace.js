@@ -6,9 +6,9 @@ var Jupyter = Jupyter || {};
 
 var jprop = function(name, module_path){
     Object.defineProperty(Jupyter, name, {
-      get: function() { 
+      get: function() {
           console.warn('accessing `'+name+'` is deprecated. Use `require("'+module_path+'")`');
-          return require(module_path); 
+          return require(module_path);
       },
       enumerable: true,
       configurable: false
@@ -17,9 +17,9 @@ var jprop = function(name, module_path){
 
 var jglobal = function(name, module_path){
     Object.defineProperty(Jupyter, name, {
-      get: function() { 
+      get: function() {
           console.warn('accessing `'+name+'` is deprecated. Use `require("'+module_path+'").'+name+'`');
-          return require(module_path)[name]; 
+          return require(module_path)[name];
       },
       enumerable: true,
       configurable: false
@@ -30,11 +30,11 @@ define(function(){
     "use strict";
 
     // expose modules
-    
+
     jprop('utils','base/js/utils')
-    
+
     //Jupyter.load_extensions = Jupyter.utils.load_extensions;
-    // 
+    //
     jprop('security','base/js/security');
     jprop('keyboard','base/js/keyboard');
     jprop('dialog','base/js/dialog');

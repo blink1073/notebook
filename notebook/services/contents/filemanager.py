@@ -460,9 +460,11 @@ class FileContentsManager(FileManagerMixin, ContentsManager):
             raise web.HTTPError(409, u'File already exists: %s' % new_path)
 
         # Move the file
+        self.log.debug("Moving file")
         try:
             with self.perm_to_403():
                 shutil.move(old_os_path, new_os_path)
+            self.log.debug("File moved")
         except web.HTTPError:
             raise
         except Exception as e:
