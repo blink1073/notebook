@@ -9,7 +9,7 @@ python:
     - 2.7
 
 sudo: required
-
+dist: trusy
 env:
   global:
     - PATH=$TRAVIS_BUILD_DIR/pandoc:$PATH
