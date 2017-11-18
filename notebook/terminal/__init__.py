@@ -1,20 +1,16 @@
 import os
 
-import terminado
-from ..utils import check_version
-
-if not check_version(terminado.__version__, '0.3.3'):
-    raise ImportError("terminado >= 0.3.3 required, found %s" % terminado.__version__)
-
-from terminado import NamedTermManager
+from win_tornado_terminals import TermManager
 from tornado.log import app_log
 from notebook.utils import url_path_join as ujoin
 from .handlers import TerminalHandler, TermSocket
 from . import api_handlers
 
+
 def initialize(webapp, notebook_dir, connection_url, settings):
-    shell = settings.get('shell_command', [os.environ.get('SHELL') or 'sh'])
-    terminal_manager = webapp.settings['terminal_manager'] = NamedTermManager(
+    default = 'cmd' if os.name == 'nt' else 'sh'
+    shell = settings.get('shell_command', [os.environ.get('SHELL') or default])
+    terminal_manager = webapp.settings['terminal_manager'] = TermManager(
         shell_command=shell,
         extra_env={'JUPYTER_SERVER_ROOT': notebook_dir,
                    'JUPYTER_SERVER_URL': connection_url,

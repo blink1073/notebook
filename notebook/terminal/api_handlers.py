@@ -1,7 +1,7 @@
 import json
 from tornado import web, gen
 from ..base.handlers import APIHandler
-from ..utils import url_path_join
+
 
 class TerminalRootHandler(APIHandler):
     @web.authenticated
@@ -11,9 +11,11 @@ class TerminalRootHandler(APIHandler):
         self.finish(json.dumps(terms))
 
     @web.authenticated
+    @gen.coroutine
     def post(self):
         """POST /terminals creates a new terminal and redirects to it"""
-        name, _ = self.terminal_manager.new_named_terminal()
+        func = self.terminal_manager.new_named_terminal
+        name = yield gen.maybe_future(func())
         self.finish(json.dumps({'name': name}))
 
 

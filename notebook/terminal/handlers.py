@@ -1,11 +1,13 @@
-#encoding: utf-8
+# encoding: utf-8
 """Tornado handlers for the terminal emulator."""
 
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
 from tornado import web
-import terminado
+
+from win_tornado_terminals import MainSocket
+
 from ..base.handlers import IPythonHandler
 from ..base.zmqhandlers import WebSocketMixin
 
@@ -18,11 +20,11 @@ class TerminalHandler(IPythonHandler):
                    ws_path="terminals/websocket/%s" % term_name))
 
 
-class TermSocket(WebSocketMixin, IPythonHandler, terminado.TermSocket):
+class TermSocket(WebSocketMixin, IPythonHandler, MainSocket):
 
     def origin_check(self):
         """Terminado adds redundant origin_check
-        
+
         Tornado already calls check_origin, so don't do anything here.
         """
         return True
@@ -31,4 +33,3 @@ class TermSocket(WebSocketMixin, IPythonHandler, terminado.TermSocket):
         if not self.get_current_user():
             raise web.HTTPError(403)
         return super(TermSocket, self).get(*args, **kwargs)
-    

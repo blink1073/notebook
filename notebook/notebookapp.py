@@ -271,7 +271,7 @@ class NotebookWebApplication(web.Application):
             allow_password_change=jupyter_app.allow_password_change,
             server_root_dir=root_dir,
             jinja2_env=env,
-            terminals_available=False,  # Set later if terminals are available
+            terminals_available=False,
         )
 
         # allow custom overrides for the tornado web app.
@@ -1297,9 +1297,8 @@ class NotebookApp(JupyterApp):
             from .terminal import initialize
             initialize(self.web_app, self.notebook_dir, self.connection_url, self.terminado_settings)
             self.web_app.settings['terminals_available'] = True
-        except ImportError as e:
-            log = self.log.debug if sys.platform == 'win32' else self.log.warning
-            log(_("Terminals not available (error was %s)"), e)
+        except Exception as e:
+            self.log.warn(_("Terminals not available (error was %s)"), e)
 
     def init_signal(self):
         if not sys.platform.startswith('win') and sys.stdin and sys.stdin.isatty():
